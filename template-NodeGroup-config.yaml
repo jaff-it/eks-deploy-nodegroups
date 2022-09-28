@@ -1,0 +1,71 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: develop
+  region: us-west-2
+
+vpc:
+  id: vpc-123123123123
+  subnets:
+    private:
+      private-1:
+        id: "subnet-11111111111111111"
+      private-2:
+        id: "subnet-22222222222222222"
+      private-3:
+        id: "subnet-33333333333333333"
+    public:
+      public-1:
+        id: "subnet-44444444444444444"
+      public-2:
+        id: "subnet-55555555555555555"
+      public-3:
+        id: "subnet-66666666666666666"
+  securityGroup: sg-1234567890
+
+managedNodeGroups:
+  - name: Staging-OnDemand--MyProject1
+    minSize: 0
+    desiredCapacity: 1
+    maxSize: 3
+    labels:
+      lifecycle: OnDemand
+      environment: Develop
+      project:	MyProject1
+    spot: false
+    instanceTypes: ["m5.2xlarge"]
+    privateNetworking: true
+    launchTemplate:
+      id: lt-000000000000000
+    subnets:
+    - private-1
+    - private-2
+    ssh:
+      allow: true
+    iam:
+      instanceRoleARN: arn:aws:iam::<ACCOUNT>:role/<EKS_Managment_Role>
+    updateConfig:
+      maxUnavailablePercentage: 20
+  - name: Staging-Ec2Spot--MyProject2
+    minSize: 0
+    desiredCapacity: 1
+    maxSize: 100
+    labels:
+      lifecycle: Ec2Spot
+      environment: Develop
+      project:	MyProject2
+    spot: true
+    instanceTypes: ["r5.xlarge","r5a.xlarge"]
+    privateNetworking: true
+    launchTemplate:
+      id: lt-9999999999999999999
+    subnets:
+      - private-1
+      - private-2
+    ssh:
+      allow: true
+    iam:
+      instanceRoleARN: arn:aws:iam::<ACCOUNT>:role/<EKS_Managment_Role>
+    updateConfig:
+      maxUnavailablePercentage: 20
