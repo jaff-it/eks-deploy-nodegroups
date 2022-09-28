@@ -22,23 +22,26 @@ To use the container, run the command :
 
 ```
 docker run -it --rm \
-    --env AWS_DEFAULT_PROFILE \
     --env AWS_ACCESS_KEY_ID \
     --env AWS_SECRET_ACCESS_KEY \
-    -v ~/.aws:/root/.aws \
     -v $(pwd):/app \
     node-groups:latest bash
 ```
 or
 ````
 docker run -it --rm \
-    --env AWS_DEFAULT_PROFILE=<my-aws-profile> \
-    --env AWS_ACCESS_KEY_ID=<xxxxxxxxxxxxxxx> \
-    --env AWS_SECRET_ACCESS_KEY=<XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX> \
+    --env AWS_DEFAULT_PROFILE \
     -v ~/.aws:/root/.aws \
     -v $(pwd):/app \
     node-groups:latest bash
 ````
+
+You can use the current values for your AWS account
+(`AWS_DEFAULT_PROFILE` or `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`), 
+or set specific
+(`AWS_DEFAULT_PROFILE=<my-profile-from-aws-config>` or 
+`AWS_ACCESS_KEY_ID=xxxxxxxxxxxx` and `AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXXXXXXXXXXX`)
+
 
 Config file and script must be in the current directory when starting the container, or replace
 
