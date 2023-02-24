@@ -110,6 +110,9 @@ if args.config_file == None:
     max_size = args.max_size
     desired = args.desired
     print("Min size: ", args.min_size, "   Max size: ", args.max_size, "   Desired size: ", args.desired)
+    ami_type = args.ami_type
+    print("AMI type: ", ami_type)
+
 
     labels = args.labels[0]
     print("Kubernetes labels: ", labels)
