@@ -72,6 +72,7 @@ Flag | Detail
 --max MAX_SIZE    |   Max size
 --desired DESIRED  |   Desired size
 --labels LABELS [LABELS ...] | Labels (--labels "'environment': 'develop', 'project': 'my-project'")
+--ami-type AMI_TYPE [AMI_TYPE ...] | Type of AMI
 
 
 **If --config-file is used, then other cli arguments take precedence over the values in the config.**
