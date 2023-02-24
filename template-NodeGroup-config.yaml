@@ -42,6 +42,8 @@ managedNodeGroups:
       allow: true
     iam:
       instanceRoleARN: arn:aws:iam::<ACCOUNT>:role/<EKS_Managment_Role>
+    ami:
+      amiType: AL2_x86_64
     updateConfig:
       maxUnavailablePercentage: 20
   - name: Staging-Ec2Spot--MyProject2
@@ -64,5 +66,7 @@ managedNodeGroups:
       allow: true
     iam:
       instanceRoleARN: arn:aws:iam::<ACCOUNT>:role/<EKS_Managment_Role>
+    ami:
+      amiType: AL2_x86_64
     updateConfig:
       maxUnavailablePercentage: 20

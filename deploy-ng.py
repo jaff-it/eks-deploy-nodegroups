@@ -37,7 +37,7 @@ def create_ng():
 
         subnets=list_subnets,
         instanceTypes=list_instance_types,
-        amiType='AL2_x86_64',
+        amiType=ami_type,
 
         nodeRole=node_role,
         labels=labels,
@@ -82,6 +82,8 @@ parser.add_argument('--labels', dest="labels", nargs='+',
                     help='Labels (--labels "\'environment\': \'develop\', \'proj\': \'my-project\'")')
 parser.add_argument('--node-role', dest="node_role",
                     help='Node Role ARN (--node-role "arn:aws:iam::<ACCOUNT>:role/<EKS_Managment_Role>")')
+parser.add_argument('--ami-type', dest="ami_type",
+                    help='AMI type (--ami-type "AL2_x86_64")')
 
 args = parser.parse_args()
 list_ng = []
@@ -108,6 +110,9 @@ if args.config_file == None:
     max_size = args.max_size
     desired = args.desired
     print("Min size: ", args.min_size, "   Max size: ", args.max_size, "   Desired size: ", args.desired)
+    ami_type = args.ami_type
+    print("AMI type: ", ami_type)
+
 
     labels = args.labels[0]
     print("Kubernetes labels: ", labels)
@@ -212,6 +217,11 @@ if args.config_file != None:
         else:
             node_role = args.node_role
 
+        if args.ami_type == None:
+            ami_type = cfg["managedNodeGroups"][ng]["ami"]["amiType"]
+        else:
+            ami_type = args.ami_type
+
         print("Cluster name: ", cluster)
         print("Node group name: ", name)
         print("List of subnets: ", list_subnets)
@@ -220,6 +230,7 @@ if args.config_file != None:
         print("Lifecycle: ", lifecycle, " capacity_type: ", capacity_type)
         print("Min size: ", min_size, "   Max size: ", max_size, "   Desired size: ", desired)
         print("Kubernetes labels: ", labels)
+        print("AMI type: ", ami_type)
 
         if name in list_ng:
             print("Node Group exists, will be updated")
